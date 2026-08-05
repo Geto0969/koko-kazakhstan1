@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page_title|default:"KOKO Kazakhstan" }} — KOKO Kazakhstan{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ meta_description|default:site_settings.site_description }}{% endblock %}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="KOKO Kazakhstan">
+    <meta property="og:title" content="{% block og_title %}{{ page_title|default:"KOKO Kazakhstan" }} — KOKO Kazakhstan{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ meta_description|default:site_settings.site_description }}{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    {% block og_image %}
+    <meta property="og:image" content="https://images.unsplash.com/photo-1596755389378-c31d7bd763f8?w=1200&q=80">
+    {% endblock %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'shop/css/main.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% include 'shop/partials/header.html' %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'shop/partials/footer.html' %}
+
+    <script src="{% static 'shop/js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,40 @@
+<footer class="footer" id="contacts">
+    <div class="container">
+        <div class="footer__grid">
+            <div class="footer__brand">
+                <a href="{% url 'shop:index' %}" class="footer__logo">KOKO</a>
+                <p class="footer__tagline">Профессиональная корейская косметика для здоровой и сияющей кожи</p>
+            </div>
+
+            <div class="footer__col">
+                <h4 class="footer__title">Навигация</h4>
+                <a href="{% url 'shop:catalog' %}" class="footer__link">Каталог</a>
+                <a href="{% url 'shop:index' %}#why-us" class="footer__link">Почему мы</a>
+                <a href="{% url 'shop:index' %}#reviews" class="footer__link">Отзывы</a>
+                <a href="{% url 'shop:index' %}#faq" class="footer__link">FAQ</a>
+            </div>
+
+            <div class="footer__col">
+                <h4 class="footer__title">Контакты</h4>
+                <a href="https://wa.me/{{ site_settings.whatsapp_number }}"
+                   class="footer__link"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    WhatsApp
+                </a>
+                <a href="{{ site_settings.instagram_url }}"
+                   class="footer__link"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Instagram
+                </a>
+                <p class="footer__text">{{ site_settings.address }}</p>
+                <p class="footer__text">{{ site_settings.working_hours }}</p>
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <p>&copy; {% now "Y" %} KOKO Kazakhstan. Все права защищены.</p>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,123 @@
+{% extends 'shop/base.html' %}
+
+{% block og_image %}
+<meta property="og:image" content="{{ product.image }}">
+{% endblock %}
+
+{% block content %}
+<section class="product-detail">
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="{% url 'shop:index' %}">Главная</a>
+            <span>/</span>
+            <a href="{% url 'shop:catalog' %}">Каталог</a>
+            <span>/</span>
+            <a href="{% url 'shop:catalog' %}?category={{ product.category.slug }}">{{ product.category.name }}</a>
+            <span>/</span>
+            <span>{{ product.name }}</span>
+        </nav>
+
+        <div class="product-detail__grid">
+            <div class="product-detail__gallery">
+                <img src="{{ product.image }}"
+                     alt="{{ product.image_alt|default:product.name }}"
+                     class="product-detail__image">
+            </div>
+
+            <div class="product-detail__info">
+                <p class="product-detail__category">{{ product.category.name }}</p>
+                <h1 class="product-detail__title">{{ product.name }}</h1>
+                <p class="product-detail__price">{{ product.price|floatformat:0 }} ₸</p>
+                <p class="product-detail__short">{{ product.short_description }}</p>
+
+                <div class="product-detail__quantity">
+                    <label for="quantity">Количество:</label>
+                    <div class="quantity-control">
+                        <button type="button" class="quantity-control__btn" id="qtyMinus" aria-label="Уменьшить">−</button>
+                        <input type="number" id="quantity" value="1" min="1" max="99" class="quantity-control__input">
+                        <button type="button" class="quantity-control__btn" id="qtyPlus" aria-label="Увеличить">+</button>
+                    </div>
+                </div>
+
+                <a href="#"
+                   id="whatsappOrderBtn"
+                   class="btn btn--primary btn--lg btn--full"
+                   data-product-name="{{ product.name }}"
+                   data-whatsapp="{{ site_settings.whatsapp_number }}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Заказать через WhatsApp
+                </a>
+
+                <div class="product-detail__sections">
+                    <div class="product-detail__section">
+                        <h2>Описание</h2>
+                        <p>{{ product.description|linebreaksbr }}</p>
+                    </div>
+
+                    {% if product.characteristics %}
+                    <div class="product-detail__section">
+                        <h2>Характеристики</h2>
+                        <p>{{ product.characteristics|linebreaksbr }}</p>
+                    </div>
+                    {% endif %}
+
+                    {% if product.usage %}
+                    <div class="product-detail__section">
+                        <h2>Способ применения</h2>
+                        <p>{{ product.usage|linebreaksbr }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if related_products %}
+<section class="section section--gray">
+    <div class="container">
+        <h2 class="section__title">Похожие товары</h2>
+        <div class="products-grid">
+            {% for product in related_products %}
+            {% include 'shop/partials/product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const qtyInput = document.getElementById('quantity');
+    const qtyMinus = document.getElementById('qtyMinus');
+    const qtyPlus = document.getElementById('qtyPlus');
+    const orderBtn = document.getElementById('whatsappOrderBtn');
+    const productName = orderBtn.dataset.productName;
+    const whatsapp = orderBtn.dataset.whatsapp;
+
+    function updateWhatsAppLink() {
+        const qty = qtyInput.value || 1;
+        const message = `Здравствуйте!\nХочу заказать:\n\n${productName}\n\nКоличество: ${qty}`;
+        orderBtn.href = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+    }
+
+    qtyMinus.addEventListener('click', function() {
+        const val = parseInt(qtyInput.value) || 1;
+        if (val > 1) qtyInput.value = val - 1;
+        updateWhatsAppLink();
+    });
+
+    qtyPlus.addEventListener('click', function() {
+        const val = parseInt(qtyInput.value) || 1;
+        if (val < 99) qtyInput.value = val + 1;
+        updateWhatsAppLink();
+    });
+
+    qtyInput.addEventListener('change', updateWhatsAppLink);
+    updateWhatsAppLink();
+});
+</script>
+{% endblock %}

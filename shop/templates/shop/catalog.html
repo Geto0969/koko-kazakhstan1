@@ -1,0 +1,63 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero__title">Каталог</h1>
+        <p class="page-hero__subtitle">Корейская косметика для идеального ухода</p>
+    </div>
+</section>
+
+<section class="section catalog-section">
+    <div class="container">
+        <!-- Search & Filters -->
+        <div class="catalog-toolbar">
+            <form class="catalog-search" method="get" action="{% url 'shop:catalog' %}">
+                {% if active_category %}
+                <input type="hidden" name="category" value="{{ active_category }}">
+                {% endif %}
+                <input type="search"
+                       name="q"
+                       value="{{ search_query }}"
+                       placeholder="Поиск товаров..."
+                       class="catalog-search__input"
+                       aria-label="Поиск товаров">
+                <button type="submit" class="catalog-search__btn" aria-label="Искать">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                    </svg>
+                </button>
+            </form>
+
+            <div class="catalog-filters">
+                <a href="{% url 'shop:catalog' %}{% if search_query %}?q={{ search_query }}{% endif %}"
+                   class="catalog-filter{% if not active_category %} catalog-filter--active{% endif %}">
+                    Все
+                </a>
+                {% for category in categories %}
+                <a href="{% url 'shop:catalog' %}?category={{ category.slug }}{% if search_query %}&q={{ search_query }}{% endif %}"
+                   class="catalog-filter{% if active_category == category.slug %} catalog-filter--active{% endif %}">
+                    {{ category.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Results -->
+        {% if products %}
+        <p class="catalog-count">Найдено: {{ products.count }} {% if products.count == 1 %}товар{% elif products.count >= 2 and products.count <= 4 %}товара{% else %}товаров{% endif %}</p>
+        <div class="products-grid">
+            {% for product in products %}
+            {% include 'shop/partials/product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="catalog-empty">
+            <p class="catalog-empty__title">Товары не найдены</p>
+            <p class="catalog-empty__text">Попробуйте изменить фильтры или поисковый запрос</p>
+            <a href="{% url 'shop:catalog' %}" class="btn btn--outline">Сбросить фильтры</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

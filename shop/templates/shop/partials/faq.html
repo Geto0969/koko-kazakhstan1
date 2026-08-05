@@ -1,0 +1,17 @@
+{% if faqs %}
+<section class="section section--pink" id="faq">
+    <div class="container container--narrow">
+        <h2 class="section__title section__title--center">Частые вопросы</h2>
+        <div class="faq-list">
+            {% for faq in faqs %}
+            <details class="faq-item">
+                <summary class="faq-item__question">{{ faq.question }}</summary>
+                <div class="faq-item__answer">
+                    <p>{{ faq.answer }}</p>
+                </div>
+            </details>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

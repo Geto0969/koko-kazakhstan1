@@ -1,0 +1,66 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero -->
+<section class="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__content">
+        <p class="hero__label fade-in">KOKO Kazakhstan</p>
+        <h1 class="hero__title fade-in">Профессиональная корейская косметика для здоровой и сияющей кожи</h1>
+        <p class="hero__subtitle fade-in">Оригинальная продукция ведущих K-beauty брендов с доставкой по всему Казахстану</p>
+        <div class="hero__actions fade-in">
+            <a href="{% url 'shop:catalog' %}" class="btn btn--primary btn--lg">Смотреть каталог</a>
+            <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Здравствуйте!%20Хочу%20получить%20консультацию%20по%20корейской%20косметике."
+               class="btn btn--outline btn--lg"
+               target="_blank"
+               rel="noopener noreferrer">
+                Получить консультацию
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+{% if featured_products %}
+<section class="section section--pink">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">Популярные товары</h2>
+            <a href="{% url 'shop:catalog' %}" class="section__link">Весь каталог →</a>
+        </div>
+        <div class="products-grid">
+            {% for product in featured_products %}
+            {% include 'shop/partials/product_card.html' with product=product %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Why Us -->
+{% include 'shop/partials/why_us.html' %}
+
+<!-- Reviews -->
+{% include 'shop/partials/reviews.html' %}
+
+<!-- Instagram -->
+{% include 'shop/partials/instagram.html' %}
+
+<!-- FAQ -->
+{% include 'shop/partials/faq.html' %}
+
+<!-- Contacts CTA -->
+<section class="section contacts-cta">
+    <div class="container contacts-cta__inner">
+        <h2 class="contacts-cta__title">Готовы начать уход?</h2>
+        <p class="contacts-cta__text">Напишите нам — подберём идеальный уход для вашей кожи</p>
+        <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Здравствуйте!%20Хочу%20получить%20консультацию%20по%20корейской%20косметике."
+           class="btn btn--primary btn--lg"
+           target="_blank"
+           rel="noopener noreferrer">
+            Написать в WhatsApp
+        </a>
+    </div>
+</section>
+{% endblock %}

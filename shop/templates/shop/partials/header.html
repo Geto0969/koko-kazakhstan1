@@ -1,0 +1,26 @@
+<header class="header" id="header">
+    <div class="container header__inner">
+        <a href="{% url 'shop:index' %}" class="header__logo">KOKO</a>
+
+        <nav class="header__nav" id="mainNav">
+            <a href="{% url 'shop:index' %}" class="header__link">Главная</a>
+            <a href="{% url 'shop:catalog' %}" class="header__link">Каталог</a>
+            <a href="{% url 'shop:index' %}#why-us" class="header__link">О нас</a>
+            <a href="{% url 'shop:index' %}#reviews" class="header__link">Отзывы</a>
+            <a href="{% url 'shop:index' %}#faq" class="header__link">FAQ</a>
+            <a href="{% url 'shop:index' %}#contacts" class="header__link">Контакты</a>
+        </nav>
+
+        <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Здравствуйте!%20Хочу%20получить%20консультацию%20по%20корейской%20косметике."
+           class="btn btn--primary header__cta"
+           target="_blank"
+           rel="noopener noreferrer">
+            Консультация
+        </a>
+
+        <button class="header__burger" id="burgerBtn" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>

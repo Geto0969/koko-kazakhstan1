@@ -1,0 +1,24 @@
+<article class="product-card">
+    <a href="{{ product.get_absolute_url }}" class="product-card__image-wrap">
+        <img src="{{ product.image }}"
+             alt="{{ product.image_alt|default:product.name }}"
+             class="product-card__image"
+             loading="lazy">
+        <div class="product-card__overlay">
+            <span class="product-card__view">Подробнее</span>
+        </div>
+    </a>
+    <div class="product-card__body">
+        <p class="product-card__category">{{ product.category.name }}</p>
+        <h3 class="product-card__name">
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        </h3>
+        <p class="product-card__price">{{ product.price|floatformat:0 }} ₸</p>
+        <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Здравствуйте!%0AХочу%20заказать:%0A%0A{{ product.name|urlencode }}%0A%0AКоличество:%201"
+           class="btn btn--primary btn--full product-card__btn"
+           target="_blank"
+           rel="noopener noreferrer">
+            Заказать
+        </a>
+    </div>
+</article>

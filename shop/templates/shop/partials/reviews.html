@@ -1,0 +1,20 @@
+{% if reviews %}
+<section class="section section--gray" id="reviews">
+    <div class="container">
+        <h2 class="section__title section__title--center">Отзывы клиентов</h2>
+        <div class="reviews-grid">
+            {% for review in reviews %}
+            <div class="review-card fade-in-up">
+                <div class="review-card__stars">
+                    {% for i in "12345" %}
+                    <span class="review-card__star{% if forloop.counter > review.rating %} review-card__star--empty{% endif %}">★</span>
+                    {% endfor %}
+                </div>
+                <p class="review-card__text">«{{ review.text }}»</p>
+                <p class="review-card__author">— {{ review.author_name }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
