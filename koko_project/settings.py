@@ -32,6 +32,9 @@ ALLOWED_HOSTS = [
     "127.0.0.1"
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://koko-kazakhstan1.onrender.com",
+]
 
 # Application definition
 
@@ -55,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'koko_project.urls'
+ROOT_URLCONF = 'koko_kazakhstan1.urls'
 
 TEMPLATES = [
     {
